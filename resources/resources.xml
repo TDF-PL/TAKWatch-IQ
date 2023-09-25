@@ -1,0 +1,13 @@
+<resources>
+    <bitmaps>
+        <bitmap id="friendly" filename="images/friendly.png" />
+        <bitmap id="neutral" filename="images/neutral.png" />
+        <bitmap id="target" filename="images/target.png" />
+        <bitmap id="unknown" filename="images/unknown.png" />
+        <bitmap id="redx" filename="images/redx.png" />
+        <bitmap id="team" filename="images/team.png" />
+    </bitmaps>
+    <properties>
+        <property id="sendhr" type="boolean">true</property>
+    </properties>
+</resources>

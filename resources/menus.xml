@@ -1,0 +1,15 @@
+<menu2 id="MessageMenu" title="Select message">
+    <menu-item id="m1" label="Roger"/>
+    <menu-item id="m2" label="Ready"/>
+    <menu-item id="m3" label="In Position"/>
+    <menu-item id="m4" label="At Breach"/>
+    <menu-item id="m5" label="All secure"/>
+    <menu-item id="m6" label="Attack!"/>
+    <menu-item id="m7" label="Move forward"/>
+    <menu-item id="m8" label="Area Clear"/>
+    <menu-item id="m9" label="Need backup"/>
+    <menu-item id="m10" label="Low on ammo"/>
+    <menu-item id="m11" label="Enemy sighted"/>
+    <menu-item id="m12" label="Fall back"/> 
+    
+</menu2>

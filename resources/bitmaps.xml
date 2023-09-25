@@ -1,0 +1,4 @@
+<resources>
+    <bitmap id="LauncherIcon" filename="images/launcher.png" />
+    <bitmap id="TakIcon" filename="images/icon.png" />
+</resources>

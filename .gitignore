@@ -1,0 +1,5 @@
+*.prg
+*.mcgen
+*.mbc
+*.mir
+bin/TAKWatchIQ.prg.debug.xml
