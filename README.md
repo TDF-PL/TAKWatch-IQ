@@ -8,7 +8,6 @@ TAKWatch-IQ is a Garmin ConnectIQ application that integrates ATAK with Garmin d
 - Receiving waypoints from ATAK (persisted on the watch)
 - Receiving markers from ATAK (not persisted on the watch)
 - Triggering Emergency alert from watch (when SELECT button clicked 5 times quickly)
-- Synchronizing visible map area on the watch with visible map area in ATAK
 - Creating vectors to markers
 - Sending routes from ATAK to watch
 
