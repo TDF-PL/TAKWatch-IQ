@@ -157,7 +157,6 @@ class OptionsMenuDelegate extends WatchUi.Menu2InputDelegate {
             showChatMenu();
         } else if (id == :movezoom) {
             view.setMapMode(WatchUi.MAP_MODE_BROWSE);
-            view.clear();
             WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
         } else if (id == :record) {
             if (view.session == null) {

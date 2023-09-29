@@ -25,6 +25,7 @@ class CustomMapMarker extends WatchUi.MapMarker {
 
 class TAKMapView extends WatchUi.MapTrackView {
     var vectorTarget = null; 
+    var vectorOwnPosition = null;
     var markers = {};
     var distance = null;
     var session;
@@ -45,7 +46,7 @@ class TAKMapView extends WatchUi.MapTrackView {
         var bottom_right = new Position.Location({:latitude => ownPosition[0]-diff, :longitude =>ownPosition[1]+diff, :format => :degrees});
 
         setMapMode(WatchUi.MAP_MODE_BROWSE);
-        setMapVisibleArea(top_left, bottom_right);     
+        setMapVisibleArea(top_left, bottom_right);  
     }
 
    function initialize() {
@@ -56,13 +57,13 @@ class TAKMapView extends WatchUi.MapTrackView {
         var diff = 0.005;
         var top_left = new Position.Location({:latitude => ownPosition[0]+diff, :longitude =>ownPosition[1]-diff, :format => :degrees});
         var bottom_right = new Position.Location({:latitude => ownPosition[0]-diff, :longitude =>ownPosition[1]+diff, :format => :degrees});
+        screenHeight = System.getDeviceSettings().screenHeight;
+        screenWidth = System.getDeviceSettings().screenWidth;
 
         setMapMode(WatchUi.MAP_MODE_PREVIEW);
         setMapVisibleArea(top_left, bottom_right);        
-        setScreenVisibleArea(0, 0, Toybox.System.getDeviceSettings().screenWidth, Toybox.System.getDeviceSettings().screenHeight/2+40);
+        setScreenVisibleArea(0, 0, screenWidth, screenHeight);
 
-        screenHeight = System.getDeviceSettings().screenHeight;
-        screenWidth = System.getDeviceSettings().screenWidth;
     }
 
     function onUpdate(dc) {
@@ -85,6 +86,7 @@ class TAKMapView extends WatchUi.MapTrackView {
             dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT); 
             dc.drawText(screenWidth / 2, screenHeight - 40 ,  Graphics.FONT_TINY, elapsedDistance, Graphics.TEXT_JUSTIFY_CENTER);
         }
+
     }
 
 
@@ -140,13 +142,23 @@ class TAKMapView extends WatchUi.MapTrackView {
             return;
         }
 
+        var ownPosition = Position.getInfo().position;
+        // We are redrawing the vector to the same target to adjust for our position change
+        if (vectorTarget == uid && vectorOwnPosition != null) {
+            var distDelta = calc_distance(ownPosition, vectorOwnPosition);
+            if (distDelta < 20) {
+                return;
+            }
+        }
+
         vectorTarget = uid;
 
         var marker = markers.get(uid);
         var poly = new WatchUi.MapPolyline();   
         poly.setWidth(4);
         poly.setColor(Graphics.COLOR_RED);
-        poly.addLocation(Position.getInfo().position);   
+        vectorOwnPosition = ownPosition;
+        poly.addLocation(vectorOwnPosition);   
         poly.addLocation(marker.getLocation());
         setPolyline(poly);
 
@@ -160,10 +172,6 @@ class TAKMapView extends WatchUi.MapTrackView {
     }
 
     function drawRoute(data) {
-        // data[1] is the objects UID, 
-        // not storing it on the watch since we can only show only one polyline anyway
-        // var uid = data[1];      
-
         var poly = new WatchUi.MapPolyline();   
         poly.setWidth(4);
         poly.setColor(Graphics.COLOR_RED);
@@ -177,7 +185,6 @@ class TAKMapView extends WatchUi.MapTrackView {
         
         setPolyline(poly);
 
-  
     }
 
     function removeMarker(uid) {
@@ -193,6 +200,7 @@ class TAKMapView extends WatchUi.MapTrackView {
     }
 
     function clear() {
+        WatchUi.MapTrackView.clear();
         distance = null;
         vectorTarget = null;
         if (markers != null && markers.size() > 0) {
