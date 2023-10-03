@@ -34,6 +34,9 @@ TAKWatch-IQ is a Garmin ConnectIQ application that integrates ATAK with Garmin d
 - fēnix® 7X / tactix® 7 / quatix® 7X Solar / Enduro™ 2
 - fēnix® 7X Pro
 
+## Releases
+https://github.com/TDF-PL/TAKWatch-IQ/releases/
+
 
 ## Build instructions
 For detailed instructions please read this: https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-extension/
