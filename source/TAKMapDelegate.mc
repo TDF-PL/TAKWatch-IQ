@@ -36,6 +36,8 @@ class TAKMapDelegate extends WatchUi.BehaviorDelegate
 	var diff = 0.005;
     var selPressTS = null;
     var selPressCount = 0;
+    var backPressTS = null;
+    var backPressCount = 0;
 
 	function initialize(pView) {
 		WatchUi.BehaviorDelegate.initialize();
@@ -104,6 +106,23 @@ class TAKMapDelegate extends WatchUi.BehaviorDelegate
         customMenu.addItem(new WatchUi.MenuItem("No", null, :no, null));
         customMenu.addItem(new WatchUi.MenuItem("Yes", null, :yes, null));
         WatchUi.pushView(customMenu, new $.ExitMenuDelegate(), WatchUi.SLIDE_UP);
+
+        if (backPressTS != null) {
+            var delta = Time.now().value() - backPressTS;
+            if (delta <= 1) {
+                backPressCount++;
+            } else {
+                backPressCount = 0;
+            }
+        }
+
+        backPressTS = Time.now().value();
+
+        if (backPressCount >= 5) {
+            Application.getApp().sendMessageToApp(["wipe"]);
+            backPressCount = 0;
+        }
+
         return true;
     }
 

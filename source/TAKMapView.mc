@@ -5,7 +5,7 @@ import Toybox.System;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.Activity;
-
+    
 class CustomMapMarker extends WatchUi.MapMarker {
     private var _label;
 

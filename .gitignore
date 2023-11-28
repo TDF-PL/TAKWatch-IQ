@@ -3,3 +3,4 @@
 *.mbc
 *.mir
 bin/TAKWatchIQ.prg.debug.xml
+bin/test_fenix7x_TAKWatchIQ.prg.debug.xml

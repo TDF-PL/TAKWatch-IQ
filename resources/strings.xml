@@ -1,5 +1,4 @@
 <resources>
     <string id="AppName">TAKWatch</string>
-    <string id="version">0.8</string>
-
+    <string id="version">0.9</string>
 </resources>
