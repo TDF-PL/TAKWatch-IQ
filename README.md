@@ -10,6 +10,7 @@ TAKWatch-IQ is a Garmin ConnectIQ application that integrates ATAK with Garmin d
 - Triggering Emergency alert from watch (when SELECT button pressed 5 times rapidly)
 - Creating vectors to markers
 - Sending routes from ATAK to watch
+- Sending chat messages
 - Triggering ATAK wipe from watch (when BACK button pressed 5 times rapidly)
 
 ## Equipment supported
@@ -43,4 +44,5 @@ java.exe -Xms1g -Dfile.encoding=UTF-8 -Dapple.awt.UIElement=true -jar <PATH_TO_S
 You can also use one of the builds provided in the releases section. 
 
 ## Releases
-https://github.com/TDF-PL/TAKWatch-IQ/releases/
+https://apps.garmin.com/en-US/apps/9f3aa645-f24f-49f2-af0f-328b98a7be70#0
+
