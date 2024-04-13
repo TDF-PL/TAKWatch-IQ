@@ -35,9 +35,11 @@ class TAKMsgView extends WatchUi.View {
                 timer = null;
             }
             WatchUi.popView(WatchUi.SLIDE_DOWN);
+        } else {
+            cnt--;
         }
         WatchUi.requestUpdate();
-        cnt--;
+        
     }
 
 

@@ -16,8 +16,10 @@ class TAKDataView extends WatchUi.View {
     }
 
     function onHide(){
-        timer.stop();
-        timer = null;
+        if (timer != null) {
+            timer.stop();
+            timer = null;
+        }
     }
 
     function onTimer() as Void{
@@ -25,6 +27,7 @@ class TAKDataView extends WatchUi.View {
     }
 
     function onUpdate(dc) {
+        
         dc.setColor(Graphics.COLOR_TRANSPARENT, Graphics.COLOR_BLACK);
         dc.clear();
         var screenHeight = System.getDeviceSettings().screenHeight;
@@ -36,7 +39,7 @@ class TAKDataView extends WatchUi.View {
             var pwr = stats.battery;
             var days = stats.batteryInDays;
             var batt = Lang.format( "BAT $1$% ($2$d)", [ pwr.format( "%2d" ), days.format( "%.0d" ) ] );
-            dc.drawText(screenWidth / 2, 80 ,  Graphics.FONT_TINY, batt, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(screenWidth / 2, screenHeight - 100 ,  Graphics.FONT_XTINY, batt, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
 
@@ -50,7 +53,7 @@ class TAKDataView extends WatchUi.View {
             }
 
             var headStr = Lang.format("HDG $1$" , [ heading.format("%03d") ]);
-            dc.drawText(screenWidth / 2, 40 ,  Graphics.FONT_MEDIUM, headStr, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(screenWidth / 2, screenHeight - 80 ,  Graphics.FONT_MEDIUM, headStr, Graphics.TEXT_JUSTIFY_CENTER);
         }
   
         // Time
@@ -63,18 +66,19 @@ class TAKDataView extends WatchUi.View {
                 ]
             );       
 
-        dc.drawText(screenWidth / 2, screenHeight - 80 ,  Graphics.FONT_MEDIUM, dateString, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(screenWidth / 2, 40 ,  Graphics.FONT_NUMBER_THAI_HOT, dateString, Graphics.TEXT_JUSTIFY_CENTER);
       
         var position = null;
         var posInfo =  Position.getInfo();
         if ( posInfo.accuracy > 2 ) {
             position = posInfo.position.toGeoString(Position.GEO_MGRS);
+            position = position.substring(0, position.length()-5) + " " + position.substring(position.length() - 5, position.length());
         } else {
             position = "NO GPS";
         }
 
         // MGRS
-        dc.drawText(screenWidth / 2, screenHeight / 2 ,  Graphics.FONT_TINY, position, Graphics.TEXT_JUSTIFY_CENTER);  
+        dc.drawText(screenWidth / 2, screenHeight / 2,  Graphics.FONT_TINY, position, Graphics.TEXT_JUSTIFY_CENTER);  
    
     }
 

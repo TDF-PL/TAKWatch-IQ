@@ -14,10 +14,10 @@ var crashOnMessage = false;
 var hasDirectMessagingSupport = true;
 var hr;
 var messageText;
-var connectionValid;
+var connectionValid = true;
 var statsSentTimestamp;
 
-var _timer;
+var _hbtimer;
 
 var VIBPROF_500ms = new Attention.VibeProfile(50, 500);
 var VIBPROF_200ms = new Attention.VibeProfile(50, 200);
@@ -31,19 +31,11 @@ class MsgListener extends Communications.ConnectionListener {
     }
 
     public function onComplete() as Void {
-        if (connectionValid == null || connectionValid == false) {
-            connectionValid = true;
-            Toybox.Attention.vibrate(VIB);
-            WatchUi.pushView(new TAKMsgView("Phone connection\nOK.", false), new TAKDataDelegate(), WatchUi.SLIDE_UP);
-        }
+
     }
 
     public function onError() as Void {
-        if (connectionValid == null || connectionValid == true) {
-            connectionValid = false;
-            Toybox.Attention.vibrate(VIB_ERROR);
-            WatchUi.pushView(new TAKMsgView("Phone connection\nFAILED.", true), new TAKDataDelegate(), WatchUi.SLIDE_UP);
-        }
+
     }
 }
 
@@ -51,6 +43,7 @@ class TAKWatch extends Application.AppBase {
 
     private var view as TAKMapView;
     public var listener;
+    private var heartbeatTS = null;
 
     function getApp() as TAKWatch {
         return Application.getApp() as TAKWatch;
@@ -72,7 +65,7 @@ class TAKWatch extends Application.AppBase {
         Position.enableLocationEvents(Position.LOCATION_CONTINUOUS, method(:onPosition)); 
         view = new TAKMapView();
         listener = new MsgListener();
-        _timer = new Timer.Timer();
+        _hbtimer = new Timer.Timer();
     }
 
     function onStart(params) {
@@ -82,7 +75,26 @@ class TAKWatch extends Application.AppBase {
             hasDirectMessagingSupport = false;
         }
         sync();
-        _timer.start(method(:sync), 300000, true);
+        _hbtimer.start(method(:checkHeartBeat), 6000, true);
+        heartbeatTS = Time.now().value();
+    }
+
+    function checkHeartBeat() as Void {
+
+        if (connectionValid == true && (heartbeatTS == null || Time.now().value() - heartbeatTS > 6)) {
+            connectionValid = false;
+            Toybox.Attention.vibrate(VIB_ERROR);
+            WatchUi.pushView(new TAKMsgView("ATAK connection\nFAILED.", true), new TAKDataDelegate(), WatchUi.SLIDE_UP);
+            return;
+        } 
+        
+        if (connectionValid == false &&
+         heartbeatTS != null && 
+         Time.now().value() - heartbeatTS < 6) {
+            connectionValid = true;
+            Toybox.Attention.vibrate(VIB);
+            WatchUi.pushView(new TAKMsgView("ATAK connection\nOK.", false), new TAKDataDelegate(), WatchUi.SLIDE_UP);
+        }
     }
 
     function sync() as Void {
@@ -96,12 +108,17 @@ class TAKWatch extends Application.AppBase {
     }
 
     function sendMessageToApp(msg) {
-        Communications.transmit(msg, null, listener);
+        if (connectionValid == true) {
+            Communications.transmit(msg, null, listener);
+        } else {
+            Toybox.Attention.vibrate(VIB_ERROR);
+            WatchUi.pushView(new TAKMsgView("ATAK connection\nFAILED.", true), new TAKDataDelegate(), WatchUi.SLIDE_UP);
+        }
     }
 
     function onSensor(sensorInfo as Sensor.Info) as Void {    
 
-        if (statsSentTimestamp != null && Time.now().value() - statsSentTimestamp < 5) {
+        if ((statsSentTimestamp != null && Time.now().value() - statsSentTimestamp < 5) || connectionValid == false) {
                 return;
         }
 
@@ -135,8 +152,8 @@ class TAKWatch extends Application.AppBase {
     }
 
     // Return the initial view of your application here
-    public function getInitialView() as Array<Views or InputDelegates>? {
-        return [view, new $.TAKMapDelegate(view)] as Array<Views or InputDelegates>;
+    public function getInitialView() {
+        return [view, new $.TAKMapDelegate(view)] ;
     }
 
     /* This is called when the TAKWatch plugin sends a message via 
@@ -211,12 +228,10 @@ class TAKWatch extends Application.AppBase {
         } else if (msg.data[0].equals("route")){
             view.drawRoute(msg.data);
 
+        } else if (msg.data[0].equals("hb")) {
+            heartbeatTS = Time.now().value();
         }
-
-        // TODO: Add option to add gpx
-
-        // TODO: Add option to draw polylines
-       
+     
     }
 
 }
