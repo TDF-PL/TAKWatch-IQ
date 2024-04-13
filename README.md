@@ -43,13 +43,6 @@ TAKWatch is an ATAK plugin that communicates with Garmin devices running TAKWatc
 <img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-1.png" width="200" height="200">
 <img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-3.jpeg" width="200" height="200">
 
-## Build instructions
-For detailed instructions please read this: https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-extension/
-
-java.exe -Xms1g -Dfile.encoding=UTF-8 -Dapple.awt.UIElement=true -jar <PATH_TO_SDK>\Garmin\ConnectIQ\Sdks\connectiq-sdk-win-6.3.0-2023-08-29-fc81ed416\bin\monkeybrains.jar -o <PATH_TO_PROJECT>\TAKWatch-IQ\bin\TAKWatchIQ.prg -f <PATH_TO_PROJECT>\TAKWatch-IQ\monkey.jungle -y <PATH_TO_DEV_KEY>\connectiq-android-sdk\developer_key -d <WATCH_MODEL> -w 
-
-You can also use one of the builds provided in the releases section. 
-
 ## Releases
 https://apps.garmin.com/en-US/apps/9f3aa645-f24f-49f2-af0f-328b98a7be70#0
 
