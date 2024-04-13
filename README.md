@@ -1,7 +1,9 @@
-# TAKWatch-IQ
+# TAKWatch
+
+<img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-2.jpeg" width="200" height="200">
 
 ## Description
-TAKWatch-IQ is a Garmin ConnectIQ application that integrates ATAK with Garmin devices via TAKWatch ATAK plugin (https://github.com/TDF-PL/TAKWatch/).
+TAKWatch is an ATAK plugin that communicates with Garmin devices running TAKWatch-IQ (https://github.com/TDF-PL/TAKWatch-IQ) application.
 
 ## Features
 - Sending heart rate to ATAK
@@ -35,6 +37,11 @@ TAKWatch-IQ is a Garmin ConnectIQ application that integrates ATAK with Garmin d
 - fēnix® 7S
 - fēnix® 7X / tactix® 7 / quatix® 7X Solar / Enduro™ 2
 - fēnix® 7X Pro
+
+## Screenshots
+
+<img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-1.png" width="200" height="200">
+<img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-3.jpeg" width="200" height="200">
 
 ## Build instructions
 For detailed instructions please read this: https://developer.garmin.com/connect-iq/reference-guides/visual-studio-code-extension/
