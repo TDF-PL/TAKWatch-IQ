@@ -9,15 +9,18 @@ import Toybox.Time.Gregorian;
 
 class TAKDataDelegate extends WatchUi.BehaviorDelegate {
 
+    var VIBPROF_500ms = new Attention.VibeProfile(50, 500);
+    var VIB = [VIBPROF_500ms];
+
+    var selPressTS = null;
+    var selPressCount = 0;
+    var backPressTS = null;
+    var backPressCount = 0;
+
     function initialize() {
 		WatchUi.BehaviorDelegate.initialize();
 
 	}
-
-    function onBack() {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
-        return true;
-    }
 
     function onPreviousPage() {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
@@ -26,6 +29,54 @@ class TAKDataDelegate extends WatchUi.BehaviorDelegate {
 
     function onNextPage() {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
+        return true;
+    }
+
+    function onSelect() {
+        if (selPressTS != null) {
+            var delta = Time.now().value() - selPressTS;
+            if (delta <= 1) {
+                selPressCount++;
+            } else {
+                selPressCount = 0;
+            }
+        }
+
+        selPressTS = Time.now().value();
+
+        if (selPressCount >= 5) {
+            Application.getApp().sendMessageToApp(["alert"]);
+            selPressCount = 0;
+        }
+
+        return true;
+    }
+
+
+    function onBack() {
+
+        var customMenu = new WatchUi.Menu2({:title=>"Exit?"});
+        customMenu.addItem(new WatchUi.MenuItem("No", null, :no, null));
+        customMenu.addItem(new WatchUi.MenuItem("Yes", null, :yes, null));
+        WatchUi.pushView(customMenu, new $.ExitMenuDelegate(), WatchUi.SLIDE_UP);
+
+        if (backPressTS != null) {
+            var delta = Time.now().value() - backPressTS;
+            if (delta <= 1) {
+                backPressCount++;
+            } else {
+                backPressCount = 0;
+            }
+        }
+
+        backPressTS = Time.now().value();
+
+        if (backPressCount >= 5) {
+            Application.getApp().sendMessageToApp(["wipe"]);
+            Toybox.Attention.vibrate(VIB);
+            backPressCount = 0;
+        }
+
         return true;
     }
 }
@@ -73,6 +124,7 @@ class TAKMapDelegate extends WatchUi.BehaviorDelegate
 
         if (selPressCount >= 5) {
             Application.getApp().sendMessageToApp(["alert"]);
+            Toybox.Attention.vibrate(VIB);
             selPressCount = 0;
         }
 
