@@ -22,6 +22,7 @@
             <iq:product id="fenix7xpronowifi"/>
             <iq:product id="fenix843mm"/>
             <iq:product id="fenix847mm"/>
+            <iq:product id="fenix8pro47mm"/>
             <iq:product id="fenix8solar47mm"/>
             <iq:product id="fenix8solar51mm"/>
             <iq:product id="fenixe"/>
@@ -31,6 +32,7 @@
             <iq:product id="fr965"/>
             <iq:product id="gpsmap66"/>
             <iq:product id="marq2"/>
+            <iq:product id="marq2aviator"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="Communications"/>
