@@ -44,5 +44,4 @@ TAKWatch is an ATAK plugin that communicates with Garmin devices running TAKWatc
 <img src="https://raw.githubusercontent.com/TDF-PL/TAKWatch-IQ/main/images/screenshot-3.jpeg" width="200" height="200">
 
 ## Releases
-https://apps.garmin.com/en-US/apps/9f3aa645-f24f-49f2-af0f-328b98a7be70#0
 
