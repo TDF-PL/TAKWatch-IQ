@@ -171,6 +171,9 @@ class TAKWatch extends Application.AppBase {
         // When data[0] = waypoint
         // Create waypoint on the watch (permanent)
         if (msg.data[0].equals("waypoint")) {
+            if (msg.data.size() < 4 || msg.data[1] == null || msg.data[2] == null || msg.data[3] == null) {
+                return;
+            }
             var lat = msg.data[1].toDouble();
             var lon = msg.data[2].toDouble();
             var location = new Toybox.Position.Location(
@@ -192,9 +195,12 @@ class TAKWatch extends Application.AppBase {
             view.addMarker(msg.data);
 
         // When data[0] = maparea
-        // adjust the visible area of our MapView  
+        // adjust the visible area of our MapView
         // This is not currnetly used and probably won't work due to CIQ limitations
         } else if (msg.data[0].equals("maparea")){
+            if (msg.data.size() < 5) {
+                return;
+            }
             var lat1 = msg.data[1].toDouble();
             var lon1 = msg.data[2].toDouble();
             var lat2 = msg.data[3].toDouble();
@@ -219,10 +225,15 @@ class TAKWatch extends Application.AppBase {
             view.setMapVisibleArea(top_left, bottom_right);        
 
         } else if (msg.data[0].equals("vector")){
-            var uid = msg.data[1];
-            view.drawVector(uid);
+            if (msg.data.size() < 2) {
+                return;
+            }
+            view.drawVector(msg.data[1]);
 
         } else if (msg.data[0].equals("remove")){
+            if (msg.data.size() < 2) {
+                return;
+            }
             view.removeMarker(msg.data[1]);
 
         } else if (msg.data[0].equals("route")){

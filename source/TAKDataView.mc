@@ -44,8 +44,9 @@ class TAKDataView extends WatchUi.View {
 
 
         // Heading
-        if (Sensor.getInfo().heading != null ){
-            var heading = Sensor.getInfo().heading;
+        var sensorInfo = Sensor.getInfo();
+        if (sensorInfo != null && sensorInfo.heading != null) {
+            var heading = sensorInfo.heading;
             heading = Math.toDegrees(heading);
 
             if (heading < 0) {
